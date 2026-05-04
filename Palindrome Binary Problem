@@ -1,0 +1,14 @@
+class Solution {
+    public boolean isBinaryPalindrome(int n) {
+        // code here
+        String binary = Integer.toBinaryString(n);
+        String reverse = new StringBuilder(binary).reverse().toString();
+        if (binary.equals(reverse) ){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
