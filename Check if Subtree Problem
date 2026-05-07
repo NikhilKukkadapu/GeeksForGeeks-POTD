@@ -1,0 +1,14 @@
+ if(root2 == null)
+            return true;
+        
+        // If main tree becomes empty
+        if(root1 == null)
+            return false;
+        
+        // Check if trees match from current node
+        if(isIdentical(root1, root2))
+            return true;
+        
+        // Otherwise search in left or right subtree
+        return isSubTree(root1.left, root2) ||
+               isSubTree(root1.right, root2);
