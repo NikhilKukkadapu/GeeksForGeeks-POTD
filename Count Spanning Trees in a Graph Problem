@@ -1,0 +1,63 @@
+class Solution {
+    public int countSpanTree(int n, int[][] edges) {
+        // code here
+           long[][] a = new long[n][n];
+
+        // Build Laplacian Matrix
+        for (int[] e : edges) {
+            int u = e[0], v = e[1];
+
+            a[u][u]++;
+            a[v][v]++;
+
+            a[u][v]--;
+            a[v][u]--;
+        }
+
+        // Remove last row & column
+        int m = n - 1;
+        double[][] mat = new double[m][m];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                mat[i][j] = a[i][j];
+            }
+        }
+
+        double det = 1;
+
+        // Gaussian Elimination
+        for (int i = 0; i < m; i++) {
+
+            int pivot = i;
+
+            while (pivot < m && mat[pivot][i] == 0)
+                pivot++;
+
+            if (pivot == m)
+                return 0;
+
+            // Swap
+            if (pivot != i) {
+                double[] temp = mat[i];
+                mat[i] = mat[pivot];
+                mat[pivot] = temp;
+
+                det *= -1;
+            }
+
+            det *= mat[i][i];
+
+            for (int j = i + 1; j < m; j++) {
+
+                double factor = mat[j][i] / mat[i][i];
+
+                for (int k = i; k < m; k++) {
+                    mat[j][k] -= factor * mat[i][k];
+                }
+            }
+        }
+
+        return (int)Math.round(det);
+    }
+}
