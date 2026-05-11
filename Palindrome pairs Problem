@@ -1,0 +1,72 @@
+class Solution {
+
+    // Function to check palindrome
+    private boolean isPalindrome(String s, int left, int right) {
+
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+
+    public boolean palindromePair(String[] arr) {
+
+        HashMap<String, Integer> map = new HashMap<>();
+
+        // Store all strings with index
+        for (int i = 0; i < arr.length; i++) {
+            map.put(arr[i], i);
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+
+            String word = arr[i];
+            int len = word.length();
+
+            // Try every split
+            for (int j = 0; j <= len; j++) {
+
+                // prefix = word[0...j-1]
+                // suffix = word[j...len-1]
+
+                // Case 1:
+                // Prefix is palindrome
+                if (isPalindrome(word, 0, j - 1)) {
+
+                    String suffix = word.substring(j);
+
+                    String revSuffix =
+                            new StringBuilder(suffix).reverse().toString();
+
+                    if (map.containsKey(revSuffix)
+                            && map.get(revSuffix) != i) {
+                        return true;
+                    }
+                }
+
+                // Case 2:
+                // Suffix is palindrome
+                // avoid duplicate check when j == len
+                if (j != len && isPalindrome(word, j, len - 1)) {
+
+                    String prefix = word.substring(0, j);
+
+                    String revPrefix =
+                            new StringBuilder(prefix).reverse().toString();
+
+                    if (map.containsKey(revPrefix)
+                            && map.get(revPrefix) != i) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+}
