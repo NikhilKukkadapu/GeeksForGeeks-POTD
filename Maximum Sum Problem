@@ -1,0 +1,27 @@
+class Solution {
+    HashMap<Integer, Integer> dp = new HashMap<>();
+    public int maxSum(int n) {
+        
+        // code here.
+          // Base case
+        if (n == 0) {
+            return 0;
+        }
+
+        // If already calculated
+        if (dp.containsKey(n)) {
+            return dp.get(n);
+        }
+
+        // Recursive calculation
+        int breakValue = maxSum(n / 2) + maxSum(n / 3) + maxSum(n / 4);
+
+        // Take maximum
+        int ans = Math.max(n, breakValue);
+
+        // Store answer
+        dp.put(n, ans);
+
+        return ans;
+    }
+}
