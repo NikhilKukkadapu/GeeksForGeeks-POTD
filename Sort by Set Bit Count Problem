@@ -1,0 +1,28 @@
+class Solution {
+    public int countSetBits(int n) {
+        int count = 0;
+        
+        while (n > 0) {
+            count += (n & 1);
+            n >>= 1;
+        }
+        
+        return count;
+    }
+    ArrayList<Integer> sortBySetBitCount(int[] arr) {
+        // code here
+         // Convert array to ArrayList
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        for (int num : arr) {
+            list.add(num);
+        }
+
+        // Stable sort based on set bit count in descending order
+        Collections.sort(list, (a, b) -> {
+            return countSetBits(b) - countSetBits(a);
+        });
+
+        return list;
+    }
+}
