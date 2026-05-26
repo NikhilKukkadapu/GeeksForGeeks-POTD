@@ -1,0 +1,29 @@
+class Solution {
+    int minToggle(int[] arr) {
+        // code here
+        int n = arr.length;
+        
+        int[] prefixOne = new int[n + 1];
+        int[] suffixZero = new int[n + 1];
+        
+        // Count 1s from left side
+        for (int i = 0; i < n; i++) {
+            prefixOne[i + 1] = prefixOne[i] + (arr[i] == 1 ? 1 : 0);
+        }
+        
+        // Count 0s from right side
+        for (int i = n - 1; i >= 0; i--) {
+            suffixZero[i] = suffixZero[i + 1] + (arr[i] == 0 ? 1 : 0);
+        }
+        
+        int ans = Integer.MAX_VALUE;
+        
+        // Try every partition point
+        for (int i = 0; i <= n; i++) {
+            int toggles = prefixOne[i] + suffixZero[i];
+            ans = Math.min(ans, toggles);
+        }
+        
+        return ans;
+    }
+}
